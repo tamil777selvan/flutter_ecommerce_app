@@ -1,28 +1,36 @@
-@@ -1,22 +1,37 @@
 name: Dart CI
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
-jobs: Add commentMore actions
-  build-and-test: 
+jobs:
+  build-and-test:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1 
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'stable'  
-    # Update flutter packages
-    - run: flutter pub upgrade --major-versions
-    # Get flutter packages
-    - run: flutter pub get
-    # Build :D 
-    - run: flutter build apk --debug
 
-    - name: Upload Debug APKAdd commentMore actions
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # updated from v1 for latest compatibility
+
+      - name: Set up Java (12.x)
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2  # updated for improved caching & stability
+        with:
+          channel: 'stable'
+
+      - name: Upgrade Flutter packages
+        run: flutter pub upgrade --major-versions
+
+      - name: Get Flutter packages
+        run: flutter pub get
+
+      - name: Build Debug APK for Appium
+        run: flutter build apk --debug
+
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk

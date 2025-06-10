@@ -14,6 +14,8 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'stable'  
+    # Update flutter packages
+    - run: flutter pub upgrade --major-versions
     # Get flutter packages
     - run: flutter pub get
     # Build :D 
